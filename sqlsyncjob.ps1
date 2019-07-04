@@ -47,7 +47,7 @@ if($availgp.PrimaryReplica -eq $env:COMPUTERNAME)
                     $newstep = New-Object Microsoft.SqlServer.Management.Smo.Agent.JobStep
                     $newstep.Name = 'DO_NOT_REMOVE_CheckServerPrimary'
                     $newstep.Parent = $job
-                    $newstep.DatabaseName = 'dex_racklabels'
+                    $newstep.DatabaseName = 'master'
                     $newstep.Command = "DECLARE @is_write BIT; SELECT @is_write = dbo.fn_is_writeable_replica('$sqltestdbName'); IF @is_write = 0 BEGIN PRINT 'EXITING GRACEFULLY'; THROW 51000, 'This is not a writeable replica', 1; END"
                     $newstep.SubSystem = 'TransactSql'
                     $newstep.OnFailAction = 'QuitWithSuccess'
